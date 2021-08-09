@@ -1,0 +1,7 @@
+# PostgreSQL
+# ------------------------------------------------------------------------------
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=sib_notes
+POSTGRES_USER=KaGyQqqLBkvIYMgIRrsEwSnEoDunaXnp
+POSTGRES_PASSWORD=joZLmyCj564VsSuGdyn6pHq2H4eRSEBvTNaxDGYMquNN5qLj1E0r5gx97EJwhbXn
