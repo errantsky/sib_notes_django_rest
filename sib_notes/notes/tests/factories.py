@@ -3,6 +3,7 @@ import factory.fuzzy
 import pytest
 from django.template.defaultfilters import slugify
 
+from sib_notes.folders.tests.factories import FolderFactory
 from sib_notes.users.tests.factories import UserFactory
 
 from ..models import Note
@@ -22,6 +23,7 @@ class NoteFactory(factory.django.DjangoModelFactory):
         variable_nb_sentences=True,
     )
     creator = factory.SubFactory(UserFactory)
+    parent_folder = factory.SubFactory(FolderFactory)
 
     class Meta:
         model = Note

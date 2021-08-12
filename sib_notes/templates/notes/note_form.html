@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
+
+
 {% block title %}
     {{ view.action|default:"Add" }} Note
 {% endblock title %}
-
 
 {% block content %}
   {% with action=view.action|default:"Add" %}

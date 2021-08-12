@@ -2,6 +2,7 @@ import pytest
 from django.urls import reverse
 from pytest_django.asserts import assertContains
 
+from ...folders.tests.factories import FolderFactory
 from ..models import Note
 from .factories import NoteFactory, UserFactory
 
@@ -14,6 +15,11 @@ def user():
 @pytest.fixture
 def note():
     return NoteFactory()
+
+
+@pytest.fixture
+def folder():
+    return FolderFactory()
 
 
 pytestmark = pytest.mark.django_db
@@ -60,9 +66,13 @@ def test_note_detail_contains_note_data(client, user, note):
     assertContains(response, note.creator)
 
 
-def test_note_create_form_valid(client, user):
+def test_note_create_form_valid(client, user, folder):
     client.force_login(user)
-    form_data = {"title": "Test Note", "text": "Here's a note for testing."}
+    form_data = {
+        "title": "Test Note",
+        "text": "Here's a note for testing.",
+        "parent_folder": folder.id,
+    }
     url = reverse("notes:add")
     response = client.post(url, form_data)
 
@@ -72,6 +82,7 @@ def test_note_create_form_valid(client, user):
 
     assert note.text == form_data["text"]
     assert note.creator == user
+    assert note.parent_folder == folder
 
 
 def test_note_create_correct_title(client, user):
@@ -88,13 +99,19 @@ def test_good_note_update_view(client, user, note):
     assertContains(response, "Update Note")
 
 
-def test_note_update(client, user, note):
+def test_note_update(client, user, note, folder):
     client.force_login(user)
+
     url = reverse("notes:update", kwargs={"slug": note.slug})
     form_data = {
         "title": note.title,
         "text": "something new",
+        "parent_folder": folder.id,
     }
-    client.post(url, form_data)
+    response = client.post(url, form_data)
+
+    assert response.status_code == 302
+
     note.refresh_from_db()
     assert note.text == "something new"
+    assert note.parent_folder == folder

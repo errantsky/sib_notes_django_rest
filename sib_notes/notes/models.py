@@ -4,6 +4,8 @@ from django.db import models
 from django.urls import reverse
 from model_utils.models import TimeStampedModel
 
+from ..folders.models import Folder
+
 
 class Note(TimeStampedModel):
     title = models.CharField("Name of Note", max_length=255)
@@ -15,6 +17,11 @@ class Note(TimeStampedModel):
         settings.AUTH_USER_MODEL,
         null=False,
         on_delete=models.CASCADE,
+    )
+    parent_folder = models.ForeignKey(
+        Folder,
+        on_delete=models.CASCADE,
+        null=True,
     )
 
     def __str__(self):

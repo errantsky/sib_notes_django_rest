@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Folder List
+{% endblock title %}
+
+{% block content %}
+  <ul>
+    {% for folder in folder_list %}
+      <li>
+        <a href="{% url "folders:detail" folder.slug %}">
+          {{ folder.name }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <p>
+    Want to create a new folder?
+  </p>
+  <p>
+    <a class="btn btn-primary" role="button" href="{% url "folders:add" %}">
+      Add Folder
+    </a>
+  </p>
+
+{% endblock content %}

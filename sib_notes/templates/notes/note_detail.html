@@ -5,6 +5,23 @@
 {% block content %}
 
   <h2>{{ note.title }}</h2>
+  <h5>
+    In folder:
+    <a href="{% url "folders:detail" note.parent_folder.slug %}">
+      {{ note.parent_folder }}
+    </a>
+  </h5>
+
+
+  {% if note.text %}
+    <p>{{ note.text }}</p>
+  {% endif %}
+
+  <h7>Submitted by
+    <a href="{% url 'users:detail' note.creator.username %}">
+      {{ note.creator.username }}
+    </a>
+  </h7>
 
   <p>
     <a class="btn btn-primary" href="{% url "notes:update" note.slug %}"
@@ -13,16 +30,4 @@
     </a>
   </p>
 
-  {% if note.text %}
-    <p>{{ note.text }}</p>
-  {% endif %}
-
-  <h3>Submitted by
-    <a href="{% url 'users:detail' note.creator.username %}">
-      {{ note.creator.username }}
-    </a>
-  </h3>
-  {% if note.creator.name %}
-    <p>{{ note.creator.name }}</p>
-  {% endif %}
 {% endblock content %}

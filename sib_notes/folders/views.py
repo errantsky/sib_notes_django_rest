@@ -3,24 +3,23 @@ from django.forms import BaseModelForm
 from django.http import HttpResponse
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
-from .models import Note
+from .models import Folder
 
 
-class NoteListView(LoginRequiredMixin, ListView):
-    model = Note
+# Create your views here.
+class FolderDetailView(LoginRequiredMixin, DetailView):
+    model = Folder
 
 
-class NoteDetailView(LoginRequiredMixin, DetailView):
-    model = Note
+class FolderListView(LoginRequiredMixin, ListView):
+    model = Folder
 
 
-class NoteCreateView(LoginRequiredMixin, CreateView):
-    model = Note
+class FolderCreateView(LoginRequiredMixin, CreateView):
+    model = Folder
 
     fields = [
-        "title",
-        "text",
-        "parent_folder",
+        "name",
     ]
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
@@ -28,13 +27,11 @@ class NoteCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class NoteUpdateView(LoginRequiredMixin, UpdateView):
-    model = Note
+class FolderUpdateView(LoginRequiredMixin, UpdateView):
+    model = Folder
 
     fields = [
-        "title",
-        "text",
-        "parent_folder",
+        "name",
     ]
 
     action = "Update"

@@ -75,6 +75,7 @@ LOCAL_APPS = [
     "sib_notes.users.apps.UsersConfig",
     # Your stuff: custom apps go here
     "sib_notes.notes.apps.NotesConfig",
+    "sib_notes.folders.apps.FoldersConfig",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

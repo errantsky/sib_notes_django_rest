@@ -17,6 +17,7 @@ urlpatterns = [
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
     path("notes/", include("sib_notes.notes.urls", namespace="notes")),
+    path("folders/", include("sib_notes.folders.urls", namespace="folders")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
