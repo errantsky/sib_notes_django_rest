@@ -1,27 +1,148 @@
+<style>
+  .list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #list-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
+  #note-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  #search {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-content: center;
+  }
+
+  #action-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  #note-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  #share-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+</style>
+
 {% extends "base.html" %}
+
 
 {% block title %}
   Folder List
 {% endblock title %}
 
 {% block content %}
-  <ul>
-    {% for folder in folder_list %}
-      <li>
-        <a href="{% url "folders:detail" folder.slug %}">
-          {{ folder.name }}
-        </a>
-      </li>
-    {% endfor %}
-  </ul>
+  <div id="dash" class="row">
+    <div id="folder-column" class="col-md-2">
+      <div class="list">
+        <div class="cell">
+          <a href="{% url "notes:list" %}">
+            <i class="far fa-folder"></i> All Notes
+          </a>
+        </div>
+        {% for folder in folder_list %}
+          <div class="cell">
+            <a href="{% url "folders:detail" folder.slug %}">
+              <i class="far fa-folder"></i> {{ folder.name }}
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+      <div id="list-actions" class="row">
+        <div class="col-sm-6">
+          <button class="btn btn-toolbar btn-block">
+            <i class="fas fa-cog"></i>
+          </button>
+        </div>
+        <div class="col-sm-6">
+          <a class="btn btn-toolbar btn-block" role="button" href="{% url "folders:add" %}">
+            <i class="fas fa-plus"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div id="note-column" class="col-md-3 row">
+      <div id="search" class="row">
+        <div id="search-icon">
+          <i class="fas fa-search"></i>
+        </div>
+        <div id="search-form">
+          <form>
+            <label for="search-bar">
+              <input id="search-bar" type="search" placeholder="Search all notes">
+            </label>
+          </form>
+        </div>
+      </div>
+      <div id="notes-list" class="row">
+        {% with notes=folder_list.first.note_set.all %}
+          {% for note in notes %}
+            <div class="note-div">
+              <a href="{% url "notes:detail" note.slug %}">
+                {{ note.title }}
+              </a>
+            </div>
+          {% endfor %}
+        {% endwith %}
+      </div>
+    </div>
+    <div id="note" class="col-md-7">
+      <div id="action-buttons" class="row">
+        <div id="note-actions" class="row">
+          <div>
+            <button class="btn btn-default">
+              <i class="far fa-edit"></i>
+            </button>
+          </div>
+          <div>
+            <button class="btn btn-default">
+              <i class="far fa-check-circle"></i>
+            </button>
+          </div>
+          <div>
+            <button class="btn btn-default">
+              <i class="fas fa-font"></i>
+            </button>
+          </div>
+        </div>
+        <div id="share-actions" class="row">
+          <div>
+            <button class="btn btn-default">
+              <i class="fas fa-user-plus"></i>
+            </button>
+          </div>
+          <div>
+            <button class="btn btn-default">
+              <i class="far fa-trash-alt"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div id="text">
+        This a placeholder for a note
+      </div>
+    </div>
 
-  <p>
-    Want to create a new folder?
-  </p>
-  <p>
-    <a class="btn btn-primary" role="button" href="{% url "folders:add" %}">
-      Add Folder
-    </a>
-  </p>
+
+  </div>
 
 {% endblock content %}

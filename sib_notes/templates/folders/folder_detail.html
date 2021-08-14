@@ -25,10 +25,13 @@
   <h7>
     Created by: <a href="{% url "users:detail" folder.creator.username %}">{{ folder.creator.username }}</a>
   </h7>
-  <p>
+  <div>
     <a class="btn btn-primary" role="button" href="{% url "folders:update" folder.slug %}"
        >
       Rename Folder
     </a>
-  </p>
+    <a class="btn btn-danger" role="button" href="">
+      Delete Folder
+    </a>
+  </div>
 {% endblock content %}
