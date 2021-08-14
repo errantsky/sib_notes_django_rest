@@ -165,6 +165,7 @@ TEMPLATES = [
         # https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
         "DIRS": [str(APPS_DIR / "templates")],
         "OPTIONS": {
+            "string_if_invalid": "INVALID EXPRESSION %s",
             # https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
             # https://docs.djangoproject.com/en/dev/ref/templates/api/#loader-types
             "loaders": [

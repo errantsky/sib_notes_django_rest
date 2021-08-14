@@ -22,18 +22,37 @@ pytestmark = pytest.mark.django_db
 
 
 def test_good_folder_list_view(client, user):
+    """
+    Tests if /folders/ returns the correct view
+    :param client:
+    :param user:
+    :return:
+    """
     client.force_login(user)
     response = client.get(reverse("folders:list"))
     assertContains(response, "Folder List")
 
 
 def test_good_folder_detail_view(client, user, folder):
+    """
+    Tests if /folders/{folder.slug}/ returns the correct view
+    :param client:
+    :param user:
+    :param folder: A Folder object created by the FolderFactory fixture
+    :return:
+    """
     client.force_login(user)
     response = client.get(reverse("folders:detail", kwargs={"slug": folder.slug}))
     assertContains(response, folder.name)
 
 
 def test_good_folder_create(client, user):
+    """
+    Tests if /folders/add/ return the correct view
+    :param client:
+    :param user:
+    :return:
+    """
     client.force_login(user)
     url = reverse("folders:add")
     response = client.get(url)
@@ -41,6 +60,13 @@ def test_good_folder_create(client, user):
 
 
 def test_folder_list_contains_2_folders(client, user):
+    """
+    Creates two Folder objects and tests if both are listed
+    in /folders/
+    :param client:
+    :param user:
+    :return:
+    """
     client.force_login(user)
 
     folder1 = FolderFactory()
@@ -53,6 +79,13 @@ def test_folder_list_contains_2_folders(client, user):
 
 
 def test_folder_detail_view_contains_folder_data(client, user, folder):
+    """
+    Tests if FolderDetailView displays the correct folder object
+    :param client:
+    :param user:
+    :param folder: A Folder object created by the FolderFactory fixture
+    :return:
+    """
     client.force_login(user)
 
     response = client.get(reverse("folders:detail", kwargs={"slug": folder.slug}))
@@ -61,7 +94,13 @@ def test_folder_detail_view_contains_folder_data(client, user, folder):
     assertContains(response, folder.creator)
 
 
-def test_good_folder_create_view(client, user):
+def test_folder_create_form_valid(client, user):
+    """
+    Tests creating a folder with valid input
+    :param client:
+    :param user:
+    :return:
+    """
     client.force_login(user)
 
     url = reverse("folders:add")
@@ -76,6 +115,13 @@ def test_good_folder_create_view(client, user):
 
 
 def test_folder_create_correct_title(client, user):
+    """
+    Tests if requesting the FolderCreateView returns the correct template,
+    as FolderCreateView and FolderCreateView use the same template file
+    :param client:
+    :param user:
+    :return:
+    """
     client.force_login(user)
     url = reverse("folders:add")
     response = client.get(url)
@@ -83,6 +129,14 @@ def test_folder_create_correct_title(client, user):
 
 
 def test_good_folder_update_view(client, user, folder):
+    """
+    Tests if requesting the NoteUpdateView returns the correct template,
+    as FolderCreateView and FolderCreateView use the same template file
+    :param client:
+    :param user:
+    :param folder: A Folder object created by the FolderFactory fixture
+    :return:
+    """
     client.force_login(user)
     url = reverse("folders:update", kwargs={"slug": folder.slug})
     response = client.get(url)
@@ -90,6 +144,13 @@ def test_good_folder_update_view(client, user, folder):
 
 
 def test_folder_update(client, user, folder):
+    """
+    Tests updating a folder given valid input
+    :param client:
+    :param user:
+    :param folder: A Folder object created by the FolderFactory fixture
+    :return:
+    """
     client.force_login(user)
     url = reverse("folders:update", kwargs={"slug": folder.slug})
     form_data = {

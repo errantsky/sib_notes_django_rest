@@ -1,0 +1,41 @@
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+#list-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+#note-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+#search {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-content: center;
+}
+
+#action-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#note-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#share-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}

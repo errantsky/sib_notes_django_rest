@@ -26,6 +26,7 @@ black==21.7b0  # https://github.com/psf/black
 pylint-django==2.4.4  # https://github.com/PyCQA/pylint-django
 pylint-celery==0.3  # https://github.com/PyCQA/pylint-celery
 pre-commit==2.13.0  # https://github.com/pre-commit/pre-commit
+interrogate==1.4.0
 
 # Django
 # ------------------------------------------------------------------------------

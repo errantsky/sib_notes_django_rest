@@ -1,7 +1,13 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import BaseModelForm
 from django.http import HttpResponse
-from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from django.views.generic import (
+    CreateView,
+    DetailView,
+    ListView,
+    TemplateView,
+    UpdateView,
+)
 
 from .models import Note
 
@@ -38,3 +44,9 @@ class NoteUpdateView(LoginRequiredMixin, UpdateView):
     ]
 
     action = "Update"
+
+
+class DashboardView(LoginRequiredMixin, TemplateView):
+    template_name = "dashboard.html"
+
+    # get_context_data

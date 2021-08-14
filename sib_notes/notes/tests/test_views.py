@@ -26,12 +26,25 @@ pytestmark = pytest.mark.django_db
 
 
 def test_good_notes_list_view(client, user):
+    """
+    Tests if /notes/ returns the correct view
+    :param client:
+    :param user:
+    :return:
+    """
     client.force_login(user)
     response = client.get(reverse("notes:list"))
     assertContains(response, "Note List")
 
 
 def test_good_note_detail_view(client, user, note):
+    """
+    Tests if /notes/{note.slug}/ returns the correct view
+    :param client:
+    :param user:
+    :param note: A note object created by the NoteFactory fixture
+    :return:
+    """
     client.force_login(user)
     url = reverse("notes:detail", kwargs={"slug": note.slug})
     response = client.get(url)
@@ -39,6 +52,12 @@ def test_good_note_detail_view(client, user, note):
 
 
 def test_good_note_create_view(client, user):
+    """
+    Tests if /notes/add returns the correct view
+    :param client:
+    :param user:
+    :return:
+    """
     client.force_login(user)
     url = reverse("notes:add")
     response = client.get(url)
@@ -46,6 +65,13 @@ def test_good_note_create_view(client, user):
 
 
 def test_note_list_contains_2_notes(client, user):
+    """
+    Creates two note objects and tests if both are listed
+    in /notes/
+    :param client:
+    :param user:
+    :return:
+    """
     note1 = NoteFactory()
     note2 = NoteFactory()
 
@@ -57,6 +83,13 @@ def test_note_list_contains_2_notes(client, user):
 
 
 def test_note_detail_contains_note_data(client, user, note):
+    """
+    Tests if NoteDetailView displays the correct Note object
+    :param client:
+    :param user:
+    :param note:
+    :return:
+    """
     client.force_login(user)
 
     response = client.get(reverse("notes:detail", kwargs={"slug": note.slug}))
@@ -67,6 +100,13 @@ def test_note_detail_contains_note_data(client, user, note):
 
 
 def test_note_create_form_valid(client, user, folder):
+    """
+    Tests creating a note with valid input
+    :param client:
+    :param user:
+    :param folder: A Folder object created by the FolderFactory fixture
+    :return:
+    """
     client.force_login(user)
     form_data = {
         "title": "Test Note",
@@ -86,6 +126,13 @@ def test_note_create_form_valid(client, user, folder):
 
 
 def test_note_create_correct_title(client, user):
+    """
+    Tests if requesting the NoteCreateView returns the correct template,
+    as NoteCreateView and NoteCreateView use the same template file
+    :param client:
+    :param user:
+    :return:
+    """
     client.force_login(user)
     url = reverse("notes:add")
     response = client.get(url)
@@ -93,6 +140,14 @@ def test_note_create_correct_title(client, user):
 
 
 def test_good_note_update_view(client, user, note):
+    """
+    Tests if requesting the NoteUpdateView returns the correct template,
+    as NoteCreateView and NoteCreateView use the same template file
+    :param client:
+    :param user:
+    :param note: A Note object created by the NoteFactory fixture
+    :return:
+    """
     client.force_login(user)
     url = reverse("notes:update", kwargs={"slug": note.slug})
     response = client.get(url)
@@ -100,6 +155,14 @@ def test_good_note_update_view(client, user, note):
 
 
 def test_note_update(client, user, note, folder):
+    """
+    Tests updating a note given valid input
+    :param client:
+    :param user:
+    :param note: A Note object created by the NoteFactory fixture
+    :param folder: A Folder object created by the FolderFactory fixture
+    :return:
+    """
     client.force_login(user)
 
     url = reverse("notes:update", kwargs={"slug": note.slug})
